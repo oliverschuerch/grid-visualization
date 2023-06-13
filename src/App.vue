@@ -1,26 +1,32 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Swiss Post - Grid Visualization</h1>
+
+  <h2>Current Implementation</h2>
+  <SwissPostGrid/>
+
+  <h2>Future Implementation</h2>
+  <SwissPostGrid future/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SwissPostGrid from './components/SwissPostGrid.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SwissPostGrid
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+@use '@swisspost/design-system-styles/basics';
+
+#App {
+  overflow: hidden;
+}
+
+hr {
+  opacity: 1;
 }
 </style>

@@ -200,7 +200,7 @@ dt:first-letter {
 
   @include post.media-breakpoint-only(xxl) {
     .container {
-      padding-inline: 40px;
+      padding-inline: 30px;
     }
 
     .row {

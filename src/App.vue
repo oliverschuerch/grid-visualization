@@ -3,24 +3,27 @@
 
   <hr>
   <SwissPostGrid heading="Current Implementation"/>
-  <div style="height: 5px;"></div>
   <SwissPostGrid heading="Future Implementation" future/>
   <hr>
+
+  <active-breakpoint class="mx-regular"/>
 </template>
 
 <script>
+import ActiveBreakpoint from './components/ActiveBreakpoint.vue';
 import SwissPostGrid from './components/SwissPostGrid.vue';
 
 export default {
   name: 'App',
   components: {
+    ActiveBreakpoint,
     SwissPostGrid
   }
 }
 </script>
 
 <style lang="scss">
-@use '@swisspost/design-system-styles/basics';
+@use '~@swisspost/design-system-styles/basics';
 
 #app {
   margin-block: 30px;

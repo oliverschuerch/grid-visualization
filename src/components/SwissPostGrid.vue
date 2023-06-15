@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="my-big bg-margin">
+    <div class="my-bigger-big bg-margin">
       <div class="container bg-padding" ref="container">
         <div class="bg-container">
           <div class="row mb-regular" ref="row">
@@ -156,7 +156,7 @@ export default {
 
 <style scoped lang="scss">
 @use '~@swisspost/design-system-styles/core' as post;
-@use '@swisspost/design-system-styles/components/grid';
+@use '~@swisspost/design-system-styles/components/grid';
 
 .bg-margin { background-color: rgb(249, 204, 157); }
 .bg-padding { background-color: rgb(195, 222, 183); }

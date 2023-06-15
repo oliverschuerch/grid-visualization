@@ -1,6 +1,8 @@
 <template>
   <div class="active-breakpoint">
-    <div>Breakpoint: <strong>{{ active.key }}</strong> (>= {{ active.value }})</div>
+    <div class="output">
+      <p>Breakpoint: <strong>{{ active.key }}</strong><br/><small>(screen >= {{ active.value }})</small></p>
+    </div>
     <div
       v-for="b, i in breakpoints"
       :key="b.key"
@@ -54,6 +56,21 @@ export default {
 :export {
   @each $key, $value in post.$grid-breakpoints {
     breakpoint-#{$key}: $value;
+  }
+}
+
+.active-breakpoint {
+  margin: -1rem 0;
+
+  .output {
+    display: flex;
+    justify-content: center;
+
+    p {
+      margin: 0;
+      text-align: center;
+      line-height: 1;
+    }
   }
 }
 

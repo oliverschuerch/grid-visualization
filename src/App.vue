@@ -3,10 +3,10 @@
 
   <hr>
   <SwissPostGrid heading="Current Implementation"/>
+  <active-breakpoint class="mx-regular"/>
   <SwissPostGrid heading="Future Implementation" future/>
   <hr>
 
-  <active-breakpoint class="mx-regular"/>
 </template>
 
 <script>

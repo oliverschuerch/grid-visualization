@@ -42,9 +42,9 @@
           <div class="row mb-regular" ref="row">
             <div v-for="col in colCount" :key="col" class="col" ref="col">
               <div class="grid-col">
-                <div class="col-gutter gutter-start" :style="{ width: columnPadding }"></div>
+                <div class="col-gutter gutter-start" :style="{ width: column.padding }"></div>
                 {{ col }}
-                <div class="col-gutter gutter-end" :style="{ width: columnPadding }"></div>
+                <div class="col-gutter gutter-end" :style="{ width: column.padding }"></div>
               </div>
             </div>
           </div>
@@ -108,17 +108,19 @@ export default {
       container: {
         margin: 0,
         padding: 0,
-        width: 0,
+        innerWidth: 0,
+        outerWidth: 0,
         maxWidth: 0,
       },
       row: {
         width: 0,
       },
       column: {
-        width: 0,
+        padding: 0,
+        innerWidth: 0,
+        outerWidth: 0,
         gap: 0,
-      },
-      columnPadding: 0
+      }
     }
   },
   mounted () {
@@ -135,20 +137,22 @@ export default {
     calculate() {
       const containerStyles = this.getComputedStyleProp(this.$refs.container);
       const columnStyles = this.getComputedStyleProp(this.$refs.col);
-      const columnPadding = columnStyles.getPropertyValue('padding-inline');
-      const gap = parseInt(columnPadding) * 2;
+
+      const containerPadding = parseInt(containerStyles.getPropertyValue('padding-inline'));
+      const columnPadding = parseInt(columnStyles.getPropertyValue('padding-inline'));
 
       this.container.margin = containerStyles.getPropertyValue('margin-inline');
-      this.container.padding = containerStyles.getPropertyValue('padding-inline');
-      this.container.width = containerStyles.getPropertyValue('width');
+      this.container.padding = `${containerPadding}px`;
+      this.container.innerWidth = `${this.$refs.container.clientWidth - (containerPadding * 2)}px`;
+      this.container.outerWidth = `${this.$refs.container.clientWidth}px`;
       this.container.maxWidth = containerStyles.getPropertyValue('max-width');
 
-      this.column.width = columnStyles.getPropertyValue('width');
-      this.column.gap = `${gap}px`;
+      this.row.width = `${this.$refs.row.clientWidth - (columnPadding * 2)}px`;
 
-      this.row.width = `${this.$refs.row.clientWidth - gap}px`;
-
-      this.columnPadding = columnPadding;
+      this.column.padding = `${columnPadding}px`;
+      this.column.innerWidth = `${this.$refs.col.clientWidth - (columnPadding * 2)}px`;
+      this.column.outerWidth = `${this.$refs.col.clientWidth}px`;
+      this.column.gap = `${columnPadding * 2}px`;
     }
   }
 }
@@ -206,10 +210,19 @@ dt:first-letter {
   grid-template-columns: repeat(3, auto);
   column-gap: 0.5rem;
   margin: 0;
+  line-height: 1.1;
 
   dt, dd {
     margin: 0;
     font-weight: post.$font-weight-normal;
+  }
+
+  dt {
+    color: post.$gray-80;
+  }
+
+  dd {
+    font-weight: post.$font-weight-bold;
   }
 }
 

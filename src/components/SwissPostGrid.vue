@@ -1,10 +1,10 @@
 <template>
   <div class="swisspost-grid" :class="{ 'is-future-implementation': future }">
-    <div v-if="!future" class="mx-regular">
-      <h2>{{ heading }}</h2>
+    <div v-if="!future" class="container-fluid">
+      <h2 class="h5">{{ heading }}</h2>
       <div class="row gap-3">
         <div class="col-auto">
-          <h3 class="h5">Container</h3>
+          <h3 class="h6">Container</h3>
           <dl class="grid-spec">
             <template v-for="value, key in container" :key="key">
               <dt>{{ key }}</dt>
@@ -52,11 +52,11 @@
       </div>
     </div>
 
-    <div v-if="future" class="mx-regular">
-      <h2>{{ heading }}</h2>
+    <div v-if="future" class="container-fluid">
+      <h2 class="h5">{{ heading }}</h2>
       <div class="row gap-3">
         <div class="col-auto">
-          <h3 class="h5">Container</h3>
+          <h3 class="h6">Container</h3>
           <dl class="grid-spec">
             <template v-for="value, key in container" :key="key">
               <dt>{{ key }}</dt>

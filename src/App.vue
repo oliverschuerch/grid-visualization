@@ -1,11 +1,18 @@
 <template>
-  <h1 class="mx-regular">Swiss Post - Grid Visualization</h1>
+  <swisspost-internet-header
+    project="test"
+    environment="int01"
+    language="de"
+    stickyness="full"
+  />
 
-  <hr>
-  <SwissPostGrid heading="Current Implementation"/>
-  <active-breakpoint class="mx-regular"/>
-  <SwissPostGrid heading="Future Implementation" future/>
-  <hr>
+  <h1 class="visually-hidden">Swiss Post - Grid Visualization</h1>
+
+  <main class="my-3">
+    <SwissPostGrid heading="Current Implementation"/>
+    <active-breakpoint class="mx-regular"/>
+    <SwissPostGrid heading="Future Implementation" future/>
+  </main>
 
 </template>
 
@@ -26,8 +33,7 @@ export default {
 @use '~@swisspost/design-system-styles/basics';
 
 #app {
-  margin-block: 30px;
-  overflow: hidden;
+  min-height: 200vh;
 }
 
 hr {

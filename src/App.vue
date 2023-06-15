@@ -1,15 +1,15 @@
 <template>
-  <h1>Swiss Post - Grid Visualization</h1>
+  <h1 class="mx-regular">Swiss Post - Grid Visualization</h1>
 
-  <h2>Current Implementation</h2>
-  <SwissPostGrid/>
-
-  <h2>Future Implementation</h2>
-  <SwissPostGrid future/>
+  <hr>
+  <SwissPostGrid heading="Current Implementation"/>
+  <div style="height: 5px;"></div>
+  <SwissPostGrid heading="Future Implementation" future/>
+  <hr>
 </template>
 
 <script>
-import SwissPostGrid from './components/SwissPostGrid.vue'
+import SwissPostGrid from './components/SwissPostGrid.vue';
 
 export default {
   name: 'App',
@@ -22,7 +22,8 @@ export default {
 <style lang="scss">
 @use '@swisspost/design-system-styles/basics';
 
-#App {
+#app {
+  margin-block: 30px;
   overflow: hidden;
 }
 

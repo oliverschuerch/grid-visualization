@@ -159,6 +159,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:map';
 @use '~@swisspost/design-system-styles/core' as post;
 @use '~@swisspost/design-system-styles/components/grid';
 
@@ -226,45 +227,22 @@ dt:first-letter {
   }
 }
 
+$grid-breakpoints: (
+  xs: map.get(post.$grid-breakpoints, 'xs'),
+  sm: 540px,
+  md: map.get(post.$grid-breakpoints, 'md'),
+  lg: map.get(post.$grid-breakpoints, 'lg'),
+  xl: map.get(post.$grid-breakpoints, 'xl'),
+  xxl: map.get(post.$grid-breakpoints, 'xxl'),
+);
+
 .is-future-implementation {
   // modify existing css to show how future implementation will look like
 
-  @include post.media-breakpoint-only(xs) {
+  @include post.media-breakpoint-only(xs, $grid-breakpoints) {
     .container {
-      // padding-inline: 12px;
-      max-width: 1280px!important;
-    }
-
-    .row {
-      --bs-gutter-x: 12px;
-    }
-  }
-
-  @include post.media-breakpoint-only(sm) {
-    .container {
-      // padding-inline: 16px;
-      max-width: 1280px!important;
-    }
-
-    .row {
-      --bs-gutter-x: 12px;
-    }
-  }
-  @include post.media-breakpoint-only(rg) {
-    .container {
-      // padding-inline: 32px;
-      max-width: 1280px!important;
-    }
-
-    .row {
-      --bs-gutter-x: 12px;
-    }
-  }
-
-  @include post.media-breakpoint-only(md) {
-    .container {
-      // padding-inline: 32px;
-      max-width: 1280px!important;
+      padding-inline: 16px;
+      max-width: none!important;
     }
 
     .row {
@@ -272,10 +250,20 @@ dt:first-letter {
     }
   }
 
-  @include post.media-breakpoint-only(lg) {
+  @include post.media-breakpoint-only(sm, $grid-breakpoints) {
     .container {
-      // padding-inline: 40px;
-      max-width: 1280px!important;
+      padding-inline: 16px;
+      max-width: none!important;
+    }
+
+    .row {
+      --bs-gutter-x: 16px;
+    }
+  }
+  @include post.media-breakpoint-only(md, $grid-breakpoints) {
+    .container {
+      padding-inline: 32px;
+      max-width: none!important;
     }
 
     .row {
@@ -283,25 +271,36 @@ dt:first-letter {
     }
   }
 
-  @include post.media-breakpoint-only(xl) {
+  @include post.media-breakpoint-only(lg, $grid-breakpoints) {
+    .container {
+      padding-inline: 32px;
+      max-width: none!important;
+    }
+
+    .row {
+      --bs-gutter-x: 24px;
+    }
+  }
+
+  @include post.media-breakpoint-only(xl, $grid-breakpoints) {
     .container {
       padding-inline: 40px;
       max-width: 1280px!important;
     }
 
     .row {
-      --bs-gutter-x: 16px;
+      --bs-gutter-x: 24px;
     }
   }
 
-  @include post.media-breakpoint-only(xxl) {
+  @include post.media-breakpoint-only(xxl, $grid-breakpoints) {
     .container {
       padding-inline: 120px;
       max-width: 1440px!important;
     }
 
     .row {
-      --bs-gutter-x: 16px;
+      --bs-gutter-x: 24px;
     }
   }
 }

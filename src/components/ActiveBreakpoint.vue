@@ -10,9 +10,22 @@
       :ref="el => breakpointRefs.push(el)"
       :data-breakpoint-index="i"
     />
-    <hr>
+    <ul class="legend">
+      <li>
+        <div class="tile margin"></div>Margin
+      </li>
+      <li>
+        <div class="tile padding"></div>Padding
+      </li>
+      <li>
+        <div class="tile column"></div>Inner Column
+      </li>
+      <li>
+        <div class="tile gutter"></div>Gutter
+      </li>
+    </ul>
     <div class="output">
-      <p>Breakpoint: <strong>{{ newActive.key }}</strong><br/><small>(screen >= {{ newActive.value }})</small></p>
+      <p>Breakpoint: <strong :class="{ 'bg-danger': newActive.key !== active.key }">{{ newActive.key }}</strong><br/><small>(screen >= {{ newActive.value }})</small></p>
     </div>
     <div
       v-for="b, i in newBreakpoints"
@@ -67,6 +80,11 @@ export default {
 
       const newActiveIndex = this.newBreakpointRefs.find(el => el.offsetParent !== null)?.getAttribute('data-breakpoint-index');
       this.newActive = this.newBreakpoints[newActiveIndex];
+
+      this.$emit('change', {
+        active: this.active,
+        newActive: this.newActive
+      });
     }
   }
 }
@@ -114,10 +132,51 @@ $grid-breakpoints: (
     display: flex;
     justify-content: center;
 
+    strong {
+      padding: 1px 3px;
+      border-radius: 3px;
+    }
+
     p {
       margin: 0;
       text-align: center;
       line-height: 1;
+    }
+  }
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: post.$size-regular;
+  margin: post.$size-regular 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    gap: post.$size-regular;
+  }
+
+  .tile {
+    width: 1em * post.$line-height-base;
+    height: 1em * post.$line-height-base;
+  }
+
+  .margin { background-color: rgb(249, 204, 157); }
+  .padding { background-color: rgb(195, 222, 183); }
+  .column { background-color: rgb(160, 197, 232); }
+  .gutter {
+    position: relative;
+    background-color: rgb(160, 197, 232);
+    border: 1px dashed lighten(post.$coral-bright, 15%);
+
+    &:before {
+      display: block;
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(post.$white, 0.6);
     }
   }
 }

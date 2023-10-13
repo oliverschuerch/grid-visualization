@@ -1,10 +1,10 @@
 <template>
   <div class="swisspost-grid" :class="{ 'is-future-implementation': future }">
     <div v-if="!future" class="container-fluid">
-      <h2 class="h5">{{ heading }}</h2>
-      <div class="row gap-3">
+      <h2 class="h5 text-center">{{ heading }}</h2>
+      <div class="row g-3">
         <div class="col-auto">
-          <h3 class="h6">Container</h3>
+          <h3 class="h6 m-0">Container</h3>
           <dl class="grid-spec">
             <template v-for="value, key in container" :key="key">
               <dt>{{ key }}</dt>
@@ -14,17 +14,7 @@
           </dl>
         </div>
         <div class="col-auto">
-          <h3 class="h6">Row</h3>
-          <dl class="grid-spec">
-            <template v-for="value, key in row" :key="key">
-              <dt>{{ key }}</dt>
-              <div>:</div>
-              <dd><code>{{ value }}</code></dd>
-            </template>
-          </dl>
-        </div>
-        <div class="col-auto">
-          <h3 class="h6">Column</h3>
+          <h3 class="h6 m-0">Column</h3>
           <dl class="grid-spec">
             <template v-for="value, key in column" :key="key">
               <dt>{{ key }}</dt>
@@ -32,7 +22,7 @@
               <dd><code>{{ value }}</code></dd>
             </template>
           </dl>
-        </div>
+       </div>
       </div>
     </div>
 
@@ -53,35 +43,25 @@
     </div>
 
     <div v-if="future" class="container-fluid">
-      <h2 class="h5">{{ heading }}</h2>
-      <div class="row gap-3">
+      <h2 class="h5 text-center">{{ heading }}</h2>
+      <div class="row g-3">
         <div class="col-auto">
-          <h3 class="h6">Container</h3>
+          <h3 class="h6 m-0">Container</h3>
           <dl class="grid-spec">
             <template v-for="value, key in container" :key="key">
               <dt>{{ key }}</dt>
               <div>:</div>
-              <dd><code>{{ value }}</code></dd>
+              <dd :class="{ 'bg-danger': value !== diffs.container[key] }"><code>{{ value }}</code></dd>
             </template>
           </dl>
         </div>
         <div class="col-auto">
-          <h3 class="h6">Row</h3>
-          <dl class="grid-spec">
-            <template v-for="value, key in row" :key="key">
-              <dt>{{ key }}</dt>
-              <div>:</div>
-              <dd><code>{{ value }}</code></dd>
-            </template>
-          </dl>
-        </div>
-        <div class="col-auto">
-          <h3 class="h6">Column</h3>
+          <h3 class="h6 m-0">Column</h3>
           <dl class="grid-spec">
             <template v-for="value, key in column" :key="key">
               <dt>{{ key }}</dt>
               <div>:</div>
-              <dd><code>{{ value }}</code></dd>
+              <dd :class="{ 'bg-danger': value !== diffs.column[key] }"><code>{{ value }}</code></dd>
             </template>
           </dl>
         </div>
@@ -97,6 +77,13 @@ export default {
     heading: {
       type: String
     },
+    colCount: {
+      type: Number
+    },
+    diffs: {
+      type: Object,
+      default: () => ({})
+    },
     future: {
       type: Boolean,
       default: false,
@@ -104,21 +91,14 @@ export default {
   },
   data () {
     return {
-      colCount: 12,
       container: {
-        margin: 0,
         padding: 0,
         innerWidth: 0,
         outerWidth: 0,
         maxWidth: 0,
       },
-      row: {
-        width: 0,
-      },
       column: {
         padding: 0,
-        innerWidth: 0,
-        outerWidth: 0,
         gap: 0,
       }
     }
@@ -141,18 +121,17 @@ export default {
       const containerPadding = parseInt(containerStyles.getPropertyValue('padding-inline'));
       const columnPadding = parseInt(columnStyles.getPropertyValue('padding-inline'));
 
-      this.container.margin = containerStyles.getPropertyValue('margin-inline');
       this.container.padding = `${containerPadding}px`;
       this.container.innerWidth = `${this.$refs.container.clientWidth - (containerPadding * 2)}px`;
       this.container.outerWidth = `${this.$refs.container.clientWidth}px`;
       this.container.maxWidth = containerStyles.getPropertyValue('max-width');
 
-      this.row.width = `${this.$refs.row.clientWidth - (columnPadding * 2)}px`;
-
       this.column.padding = `${columnPadding}px`;
-      this.column.innerWidth = `${this.$refs.col.clientWidth - (columnPadding * 2)}px`;
-      this.column.outerWidth = `${this.$refs.col.clientWidth}px`;
       this.column.gap = `${columnPadding * 2}px`;
+
+      if (!this.future) {
+        this.$emit('change', this.$data);
+      }
     }
   }
 }
@@ -183,7 +162,7 @@ dt:first-letter {
     position: absolute;
     top: -1rem;
     bottom: -1rem;
-    background-color: rgba(post.$coral-bright, 0.1);
+    background-color: rgba(post.$white, 0.6);
 
     &.gutter-start {
       right: 100%;
@@ -207,14 +186,16 @@ dt:first-letter {
 }
 
 .grid-spec {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(3, auto);
   column-gap: 0.5rem;
-  margin: 0;
+  margin: 0 0 post.$size-regular;
   line-height: 1.1;
+  font-size: 12px;
 
   dt, dd {
-    margin: 0;
+    margin: 0 0 1px;
+    padding: 1px 0;
     font-weight: post.$font-weight-normal;
   }
 
@@ -223,6 +204,8 @@ dt:first-letter {
   }
 
   dd {
+    padding-inline: 3px;
+    border-radius: 3px;
     font-weight: post.$font-weight-bold;
   }
 }

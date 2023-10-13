@@ -51,7 +51,7 @@
             <template v-for="value, key in container" :key="key">
               <dt>{{ key }}</dt>
               <div>:</div>
-              <dd :class="{ 'bg-danger': value !== diffs.container[key] }"><code>{{ value }}</code></dd>
+              <dd :class="{ 'bg-danger': value !== diffs?.container[key] }"><code>{{ value }}</code></dd>
             </template>
           </dl>
         </div>
@@ -61,7 +61,7 @@
             <template v-for="value, key in column" :key="key">
               <dt>{{ key }}</dt>
               <div>:</div>
-              <dd :class="{ 'bg-danger': value !== diffs.column[key] }"><code>{{ value }}</code></dd>
+              <dd :class="{ 'bg-danger': value !== diffs?.column[key] }"><code>{{ value }}</code></dd>
             </template>
           </dl>
         </div>

@@ -169,7 +169,7 @@ dt:first-letter {
       border-right: 1px dashed lighten(post.$coral-bright, 15%);
 
       .row > :first-child & {
-        width: 0!important;
+        display: none;
       }
     }
 
@@ -178,7 +178,7 @@ dt:first-letter {
       border-left: 1px dashed lighten(post.$coral-bright, 15%);
 
       .row > :last-child & {
-        width: 0!important;
+        display: none;
       }
     }
 

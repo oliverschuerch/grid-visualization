@@ -18,7 +18,7 @@
         <div class="tile padding"></div>Padding
       </li>
       <li>
-        <div class="tile column"></div>Inner Column
+        <div class="tile column"></div>Column
       </li>
       <li>
         <div class="tile gutter"></div>Gutter
@@ -152,10 +152,11 @@ $grid-breakpoints: (
   margin: post.$size-regular 0;
   padding: 0;
   list-style: none;
+  font-size: 12px;
 
   li {
     display: flex;
-    gap: post.$size-regular;
+    gap: post.$size-micro;
   }
 
   .tile {

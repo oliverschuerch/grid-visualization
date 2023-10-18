@@ -6,23 +6,27 @@
         <div class="col-auto">
           <h3 class="h6 m-0">Container</h3>
           <dl class="grid-spec">
-            <template v-for="value, key in container" :key="key">
+            <template v-for="(value, key) in container" :key="key">
               <dt>{{ key }}</dt>
               <div>:</div>
-              <dd><code>{{ value }}</code></dd>
+              <dd>
+                <code>{{ value }}</code>
+              </dd>
             </template>
           </dl>
         </div>
         <div class="col-auto">
           <h3 class="h6 m-0">Column</h3>
           <dl class="grid-spec">
-            <template v-for="value, key in column" :key="key">
+            <template v-for="(value, key) in column" :key="key">
               <dt>{{ key }}</dt>
               <div>:</div>
-              <dd><code>{{ value }}</code></dd>
+              <dd>
+                <code>{{ value }}</code>
+              </dd>
             </template>
           </dl>
-       </div>
+        </div>
       </div>
     </div>
 
@@ -32,9 +36,15 @@
           <div class="row mb-regular" ref="row">
             <div v-for="col in colCount" :key="col" class="col" ref="col">
               <div class="grid-col">
-                <div class="col-gutter gutter-start" :style="{ width: column.padding }"></div>
+                <div
+                  class="col-gutter gutter-start"
+                  :style="{ width: column.padding }"
+                ></div>
                 {{ col }}
-                <div class="col-gutter gutter-end" :style="{ width: column.padding }"></div>
+                <div
+                  class="col-gutter gutter-end"
+                  :style="{ width: column.padding }"
+                ></div>
               </div>
             </div>
           </div>
@@ -48,20 +58,24 @@
         <div class="col-auto">
           <h3 class="h6 m-0">Container</h3>
           <dl class="grid-spec">
-            <template v-for="value, key in container" :key="key">
+            <template v-for="(value, key) in container" :key="key">
               <dt>{{ key }}</dt>
               <div>:</div>
-              <dd :class="{ 'bg-danger': value !== diffs?.container[key] }"><code>{{ value }}</code></dd>
+              <dd :class="{ 'bg-danger': value !== diffs?.container[key] }">
+                <code>{{ value }}</code>
+              </dd>
             </template>
           </dl>
         </div>
         <div class="col-auto">
           <h3 class="h6 m-0">Column</h3>
           <dl class="grid-spec">
-            <template v-for="value, key in column" :key="key">
+            <template v-for="(value, key) in column" :key="key">
               <dt>{{ key }}</dt>
               <div>:</div>
-              <dd :class="{ 'bg-danger': value !== diffs?.column[key] }"><code>{{ value }}</code></dd>
+              <dd :class="{ 'bg-danger': value !== diffs?.column[key] }">
+                <code>{{ value }}</code>
+              </dd>
             </template>
           </dl>
         </div>
@@ -72,24 +86,24 @@
 
 <script>
 export default {
-  name: 'SwissPostGrid',
+  name: "SwissPostGrid",
   props: {
     heading: {
-      type: String
+      type: String,
     },
     colCount: {
-      type: Number
+      type: Number,
     },
     diffs: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     future: {
       type: Boolean,
       default: false,
-    }
+    },
   },
-  data () {
+  data() {
     return {
       container: {
         padding: 0,
@@ -100,51 +114,63 @@ export default {
       column: {
         padding: 0,
         gap: 0,
-      }
-    }
+      },
+    };
   },
-  mounted () {
+  mounted() {
     this.$nextTick(this.calculate);
-    window.addEventListener('resize', this.calculate);
+    window.addEventListener("resize", this.calculate);
   },
-  beforeUnmount () {
-    window.removeEventListener('resize', this.calculate);
+  beforeUnmount() {
+    window.removeEventListener("resize", this.calculate);
   },
   methods: {
-    getComputedStyleProp (el) {
+    getComputedStyleProp(el) {
       return window.getComputedStyle(el);
     },
     calculate() {
       const containerStyles = this.getComputedStyleProp(this.$refs.container);
       const columnStyles = this.getComputedStyleProp(this.$refs.col);
 
-      const containerPadding = parseInt(containerStyles.getPropertyValue('padding-inline'));
-      const columnPadding = parseInt(columnStyles.getPropertyValue('padding-inline'));
+      const containerPadding = parseInt(
+        containerStyles.getPropertyValue("padding-inline")
+      );
+      const columnPadding = parseInt(
+        columnStyles.getPropertyValue("padding-inline")
+      );
 
       this.container.padding = `${containerPadding}px`;
-      this.container.innerWidth = `${this.$refs.container.clientWidth - (containerPadding * 2)}px`;
+      this.container.innerWidth = `${
+        this.$refs.container.clientWidth - containerPadding * 2
+      }px`;
       this.container.outerWidth = `${this.$refs.container.clientWidth}px`;
-      this.container.maxWidth = containerStyles.getPropertyValue('max-width');
+      this.container.maxWidth = containerStyles.getPropertyValue("max-width");
 
       this.column.padding = `${columnPadding}px`;
       this.column.gap = `${columnPadding * 2}px`;
 
       if (!this.future) {
-        this.$emit('change', this.$data);
+        this.$emit("change", this.$data);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
-@use 'sass:map';
-@use '~@swisspost/design-system-styles/core' as post;
-@use '~@swisspost/design-system-styles/components/grid';
+@use "sass:map";
+@use "~@swisspost/design-system-styles/core" as post;
+@use "~@swisspost/design-system-styles/components/grid";
 
-.bg-margin { background-color: rgb(249, 204, 157); }
-.bg-padding { background-color: rgb(195, 222, 183); }
-.bg-container { background-color: rgb(160, 197, 232); }
+.bg-margin {
+  background-color: rgb(249, 204, 157);
+}
+.bg-padding {
+  background-color: rgb(195, 222, 183);
+}
+.bg-container {
+  background-color: rgb(160, 197, 232);
+}
 
 dt:first-letter {
   text-transform: uppercase;
@@ -181,7 +207,6 @@ dt:first-letter {
         display: none;
       }
     }
-
   }
 }
 
@@ -193,7 +218,8 @@ dt:first-letter {
   line-height: 1.1;
   font-size: 12px;
 
-  dt, dd {
+  dt,
+  dd {
     margin: 0 0 1px;
     padding: 1px 0;
     font-weight: post.$font-weight-normal;
@@ -211,12 +237,12 @@ dt:first-letter {
 }
 
 $grid-breakpoints: (
-  xs: map.get(post.$grid-breakpoints, 'xs'),
+  xs: map.get(post.$grid-breakpoints, "xs"),
   sm: 540px,
-  md: map.get(post.$grid-breakpoints, 'md'),
-  lg: map.get(post.$grid-breakpoints, 'lg'),
-  xl: map.get(post.$grid-breakpoints, 'xl'),
-  xxl: map.get(post.$grid-breakpoints, 'xxl'),
+  md: map.get(post.$grid-breakpoints, "md"),
+  lg: map.get(post.$grid-breakpoints, "lg"),
+  xl: map.get(post.$grid-breakpoints, "xl"),
+  xxl: map.get(post.$grid-breakpoints, "xxl"),
 );
 
 .is-future-implementation {
@@ -224,19 +250,19 @@ $grid-breakpoints: (
 
   @include post.media-breakpoint-only(xs, $grid-breakpoints) {
     .container {
-      padding-inline: 16px;
-      max-width: none!important;
+      padding-inline: 12px;
+      max-width: none !important;
     }
 
     .row {
-      --bs-gutter-x: 16px;
+      --bs-gutter-x: 12px;
     }
   }
 
   @include post.media-breakpoint-only(sm, $grid-breakpoints) {
     .container {
       padding-inline: 16px;
-      max-width: none!important;
+      max-width: none !important;
     }
 
     .row {
@@ -246,7 +272,7 @@ $grid-breakpoints: (
   @include post.media-breakpoint-only(md, $grid-breakpoints) {
     .container {
       padding-inline: 32px;
-      max-width: none!important;
+      max-width: none !important;
     }
 
     .row {
@@ -257,33 +283,33 @@ $grid-breakpoints: (
   @include post.media-breakpoint-only(lg, $grid-breakpoints) {
     .container {
       padding-inline: 32px;
-      max-width: none!important;
+      max-width: none !important;
     }
 
     .row {
-      --bs-gutter-x: 24px;
+      --bs-gutter-x: 16px;
     }
   }
 
   @include post.media-breakpoint-only(xl, $grid-breakpoints) {
     .container {
       padding-inline: 40px;
-      max-width: 1280px!important;
+      max-width: 1280px !important;
     }
 
     .row {
-      --bs-gutter-x: 24px;
+      --bs-gutter-x: 16px;
     }
   }
 
   @include post.media-breakpoint-only(xxl, $grid-breakpoints) {
     .container {
       padding-inline: 120px;
-      max-width: 1440px!important;
+      max-width: 1440px !important;
     }
 
     .row {
-      --bs-gutter-x: 24px;
+      --bs-gutter-x: 16px;
     }
   }
 }
